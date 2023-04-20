@@ -36,7 +36,7 @@ apiVersion: v1
 metadata:
   name: app-service-invoices
 spec:
-  type: LoadBalancer
+  type: ClusterIP
   selector:
     app: service-invoices
   ports:
