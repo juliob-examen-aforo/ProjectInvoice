@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: app-invoices
-        image: juliocm18/app-invoices:1
+        image: juliocm18/app-invoices:2
         ports:
         - containerPort: 5002
         env:
