@@ -1,0 +1,13 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: app-service-invoices
+spec:
+  type: LoadBalancer
+  selector:
+    app: service-invoices
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 5002
+    name: http
