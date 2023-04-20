@@ -3,10 +3,9 @@ const { Kafka } = require('kafkajs')
 const { Pool } = require('pg')
 require('dotenv').config()
 const express = require('express')
+const logProvider = require('./src/app/middlewares/logprovider')
 const app = express()
 const appPromise = require('./src/app/middlewares/configprovider').appPromise
-
-
 
 appPromise.then(function(app) {
     const PORT = process.env.SERVER_PORT_INVOICE || 3002
@@ -47,16 +46,14 @@ appPromise.then(function(app) {
                         if (err) {
                             return console.error('Error executing query', err.stack)
                         }
-                        console.log(`1 document inserted in invoices amount ${jsonObj.amount}`, new Date());
-                        await consumer.commitOffsets([{ topic, partition, offset: (Number(message.offset) + 1).toString() }])
-                        console.log(`Commit message with accountId: 1`, new Date());
+                        logProvider.info(`1 document inserted in invoices amount ${jsonObj.amount}`, new Date());
+                        await consumer.commitOffsets([{ topic, partition, offset: (Number(message.offset) + 1).toString() }]);                         
                     })
                 },
             })
         }
 
-        console.log('Application running on port ', PORT)
-
+        console.log('Application running on port ', PORT);
 
     })
 });

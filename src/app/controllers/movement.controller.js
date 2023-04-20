@@ -1,8 +1,9 @@
 const movementService = require('../services/movement.service')
-
+const logProvider = require("../middlewares/logprovider");
 const getInvoice = async (req, res) => {
-    const invoiceId = parseInt(req.params.invoiceId)
-    return res.send(await movementService.getInvoice())
+    const invoices = await movementService.getInvoice();
+    logProvider.info("Invoices Services", invoices);
+    return res.send(invoices)
 }
 
 module.exports = { getInvoice }
