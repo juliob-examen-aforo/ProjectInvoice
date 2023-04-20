@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app-deployment-invoices
+  labels:
+    app: service-invoices
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: service-invoices
+  template:
+    metadata:
+      labels:
+        app: service-invoices
+    spec:
+      containers:
+      - name: app-invoices
+        image: juliocm18/app-invoices:1
+        ports:
+        - containerPort: 5002
+        env:
+        - name: NACOS_SERVERADDR
+          value: "143.244.222.245:8848"
+        - name: NACOS_NAMESPACE
+          value: "config-service-test"
+        - name: NACOS_IDENTITYKEY
+          value: "nacos"
+        - name: NACOS_IDENTITYVALUE
+          value: "nacos"
+        - name: NACOS_ENV
+          value: "config-service-test"
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: app-service-invoices
+spec:
+  type: LoadBalancer
+  selector:
+    app: service-invoices
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 5002
+    name: http
