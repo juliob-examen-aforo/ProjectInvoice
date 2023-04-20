@@ -7,7 +7,7 @@ spec:
   selector:
     app: service-invoices
   ports:
-  - protocol: TCP
-    port: 80
-    targetPort: 5002
-    name: http
+    - protocol: TCP
+      port: 80
+      targetPort: 5002
+      name: http
